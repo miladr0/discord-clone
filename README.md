@@ -1,4 +1,4 @@
-Discord clone using webpack5, Module Federation, React, GraphQL & Websockets
+Discord clone using webpack5, React & Websockets
 
 ### WIP
 still in progress :)
