@@ -3,9 +3,7 @@ const Dotenv = require('dotenv-webpack')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common.js')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 
-const deps = require('../package.json').dependencies
 module.exports = merge(common, {
   // Set the mode to development or production
   mode: 'development',
@@ -27,7 +25,7 @@ module.exports = merge(common, {
     rules: [
       // ... other rules
       {
-        test: /\.[jt]sx?$/,
+        test: /\.[js]sx?$/,
         exclude: /node_modules/,
         use: [
           // ... other loaders
@@ -51,22 +49,5 @@ module.exports = merge(common, {
     }),
     // new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
-    new ModuleFederationPlugin({
-      name: 'starter',
-      filename: 'remoteEntry.js',
-      remotes: {},
-      exposes: {},
-      shared: {
-        ...deps,
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
-        },
-      },
-    }),
   ].filter(Boolean),
 })

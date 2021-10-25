@@ -1,46 +1,25 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql,
-} from '@apollo/client'
+import { Switch, Route } from 'react-router-dom'
 
 import './index.scss'
 import './app.styles.scss'
-import LogoChannels from './components/LogoChannels'
-import Header from './components/Header'
-import InnerChannels from './components/InnerChannels'
-import MessageContainer from './components/chat/MessageContainer'
-import OnlineUsers from './components/OnlineUsers'
-
-const client = new ApolloClient({
-  uri: process.env.API_URL,
-  cache: new InMemoryCache(),
-})
-
-class App extends React.Component {
+import Home from './pages/Home'
+import Landing from './pages/Landing'
+import Login from './pages/Login'
+import Me from './pages/Me'
+import Register from './pages/Register'
+import PrivateRoute from './utils/PrivateRoute'
+export default class App extends React.Component {
   render() {
     return (
-      <ApolloProvider client={client}>
-        <div className='flex'>
-          <LogoChannels />
-          <div className='flex flex-1 flex-col min-h-screen h-screen'>
-            <Header />
-            <div className='flex-1 flex overflow-y-hidden bg-discord-600'>
-              <InnerChannels />
-              <MessageContainer />
-              <div className='flex justify-between'>
-                <OnlineUsers />
-              </div>
-            </div>
-          </div>
-        </div>
-      </ApolloProvider>
+      <Switch>
+        <Route exact path='/' component={Landing} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
+        <PrivateRoute exact path='/channels' component={Home} />
+        <PrivateRoute exact path='/channels/me' component={Me} />
+        <PrivateRoute exact path='/channels/me/:dmId' component={Me} />
+      </Switch>
     )
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('root'))

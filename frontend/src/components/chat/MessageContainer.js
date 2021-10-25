@@ -1,27 +1,128 @@
-import React from 'react'
-import { useQuery, gql } from '@apollo/client'
+import React, { useRef, useCallback } from 'react'
+import { useInfiniteQuery } from 'react-query'
+import EmptyChat from './EmptyChat'
 import Input from './Input'
 import Message from './Message'
+import { getMessages } from '../../api/messages'
+import { ROOM_MESSAGES_KEY } from '../../constants/queryKeys'
+import ChatBeginner from './ChatBeginner'
+import { getTimeDifference, isNewDay } from '../../utils/dateUtils'
+import Divider from './Divider'
 
-const GET_MESSAGES = gql`
-  query {
-    messages {
-      id
-      content
-      user
+import LoadingCircle from '../../assets/loading_circle_icon.svg'
+
+function checkSameTime(message1, message2) {
+  if (message1.senderId.id !== message2.senderId.id) return false
+  if (message1.createdAt === message2.createdAt) return false
+  return getTimeDifference(message1.createdAt, message2.createdAt) < 5
+}
+
+export default function MessageContainer({ room, user }) {
+  const observer = useRef()
+
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ROOM_MESSAGES_KEY(room?.id),
+    async ({ pageParam }) => {
+      const { data } = await getMessages(room.id, pageParam)
+
+      return data
+    },
+    {
+      getNextPageParam: (lastPage) => {
+        const { page, totalPages } = lastPage
+        return page < totalPages ? page + 1 : undefined
+      },
     }
-  }
-`
+  )
 
-export default function MessageContainer() {
-  const { data } = useQuery(GET_MESSAGES)
+  const lastMessageRef = useCallback(
+    (node) => {
+      if (isLoading) return
+
+      if (observer.current) observer.current.disconnect()
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage()
+        }
+      })
+
+      if (node) observer.current.observe(node)
+    },
+    [isLoading, hasNextPage, fetchNextPage]
+  )
+
+  const messages = data ? data.pages.flatMap((page) => page?.results ?? []) : []
 
   return (
     <div className='bg-discord-600 flex flex-1 flex-col'>
-      <div className='overflow-y-auto main--chat--scrollbar flex-1'>
-        {data && data.messages.map((message) => <Message message={message} />)}
+      <div className='overflow-y-auto h-full main--chat--scrollbar flex-1 flex flex-col-reverse'>
+        {isLoading === false && messages.length ? (
+          messages.map((message, index) => {
+            console.log('index: ', index)
+            console.log('message: ', message.message)
+
+            if (messages.length === index + 1) {
+              return (
+                <>
+                  <div key={message.id} ref={lastMessageRef}>
+                    <Message
+                      isSameTime={checkSameTime(
+                        message,
+                        messages[Math.min(index + 1, messages.length - 1)]
+                      )}
+                      chat={message}
+                    />
+                  </div>
+                  {isNewDay(
+                    message.createdAt,
+                    messages[Math.min(index + 1, messages.length - 1)].createdAt
+                  ) && <Divider date={message.createdAt} />}
+                </>
+              )
+            }
+
+            return (
+              <>
+                <Message
+                  key={message.id}
+                  isSameTimePrev={checkSameTime(
+                    message,
+                    messages[Math.min(index + 1, messages.length - 1)]
+                  )}
+                  isSameTimeNext={checkSameTime(
+                    message,
+                    messages[index - 1 < 0 ? 0 : index - 1]
+                  )}
+                  chat={message}
+                />
+                {isNewDay(
+                  message.createdAt,
+                  messages[Math.min(index + 1, messages.length - 1)].createdAt
+                ) && <Divider date={message.createdAt} />}
+              </>
+            )
+          })
+        ) : (
+          <EmptyChat room={room} user={user} />
+        )}
+        {isLoading || (isFetchingNextPage && messages.length) ? (
+          <p>
+            <LoadingCircle className='animate-spin mt-2 h-5 w-5 text-white mx-auto' />
+          </p>
+        ) : null}
+
+        {isLoading === false && hasNextPage === false && (
+          <ChatBeginner room={room} user={user} />
+        )}
       </div>
-      <Input />
+      <Input room={room} user={user} />
     </div>
   )
 }
