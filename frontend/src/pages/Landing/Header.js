@@ -52,6 +52,12 @@ export default function Header() {
           <a className='font-semibold text-white p-4 hover:underline' href='#'>
             Support
           </a>
+          <a className='font-semibold text-white p-4 hover:underline' href='#'>
+            Blog
+          </a>
+          <a className='font-semibold text-white p-4 hover:underline' href='#'>
+            Careers
+          </a>
         </nav>
 
         <div className='flex flex-row justify-between'>
