@@ -8,14 +8,14 @@ import TinyStarsLandingImage from '../../assets/tiny_stars_landing.svg'
 export default function Footer() {
   return (
     <div className='flex flex-col'>
-      <div className='flex md:flex-row justify-center items-center sm:my-28 my-20 px-4'>
+      <div className='flex md:flex-row justify-center items-center sm:my-28 my-18 px-4'>
         <div className='flex flex-col md:flex-row justify-center items-center'>
           <InviteOnlyLandingImage className='w-11/12 md:w-5/12 lg:w-6/12 xl:w-6/12 2xl:w-4/12' />
           <div className='w-11/12 md:w-5/12 lg:w-4/12  xl:w-3/12 2xl:w-3/12  md:ml-20 '>
-            <h1 className='text-left md:text-5xl text-xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-6'>
+            <h1 className='text-left md:text-5xl text-xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-8'>
               Create an invite-only place where you belong
             </h1>
-            <p className='mt-8 text-left md:text-lg text-base text-discord-notQuiteDark'>
+            <p className='mt-4 text-left md:text-lg text-base text-discord-notQuiteDark'>
               Discord servers are organized into topic-based channels where you
               can collaborate, share, and just talk about your day without
               clogging up a group chat.
@@ -25,12 +25,12 @@ export default function Footer() {
       </div>
 
       <div className='flex  justify-center items-center bg-discord-openGray'>
-        <div className='flex flex-col flex-col-reverse md:flex-row justify-center items-center sm:my-28 my-20 px-4'>
+        <div className='flex flex-col flex-col-reverse md:flex-row justify-center items-center sm:my-28 my-18 px-4'>
           <div className='w-11/12 md:w-5/12 lg:w-4/12   xl:w-3/12 2xl:w-3/12  '>
-            <h1 className='text-left md:text-5xl text-xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-6'>
+            <h1 className='text-left md:text-5xl text-xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-8'>
               Where hanging out is easy
             </h1>
-            <p className='mt-8 text-left text-lg text-discord-notQuiteDark'>
+            <p className='mt-4 text-left text-base text-discord-notQuiteDark'>
               Grab a seat in a voice channel when you’re free. Friends in your
               server can see you’re around and instantly pop in to talk without
               having to call.
@@ -40,13 +40,13 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row justify-center items-center sm:my-28 my-20 px-4'>
+      <div className='flex flex-col md:flex-row justify-center items-center sm:my-28 my-18 px-4'>
         <FandomLandingImage className='w-11/12 md:w-5/12 lg:w-6/12 xl:w-6/12 2xl:w-4/12' />
         <div className='w-11/12 md:w-5/12 lg:w-4/12  xl:w-3/12 2xl:w-3/12  md:ml-20 '>
-          <h1 className='text-left md:text-5xl text-xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-6'>
+          <h1 className='text-left md:text-5xl text-xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-8'>
             From few to a fandom
           </h1>
-          <p className='mt-8 text-left text-lg text-discord-notQuiteDark'>
+          <p className='mt-4 text-left text-base text-discord-notQuiteDark'>
             Get any community running with moderation tools and custom member
             access. Give members special powers, set up private channels, and
             more.
@@ -54,26 +54,26 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className='flex  justify-center items-center bg-discord-openGray '>
-        <div className='flex flex-col justify-center items-center sm:my-28 my-16 px-4'>
-          <div className='flex flex-col justify-center items-center'>
-            <h1 className='text-left md:text-5xl text-2xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-6'>
+      <div className='flex  justify-center items-center bg-discord-openGray px-4'>
+        <div className='flex flex-col justify-center items-center sm:my-18 my-14 p-4'>
+          <div className='flex flex-col justify-center items-center p-6'>
+            <h1 className='text-left md:text-5xl text-3xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-6'>
               RELIABLE TECH FOR STAYING CLOSE
             </h1>
-            <p className='w-full md:w-9/12 px-4 mt-8 md:text-center text-left text-lg text-discord-notQuiteDark '>
+            <p className='w-full md:w-9/12 px-4 mt-8 md:text-center text-left text-base text-discord-notQuiteDark '>
               Low-latency voice and video feels like you’re in the same room.
               Wave hello over video, watch friends stream their games, or gather
               up and have a drawing session with screen share.
             </p>
           </div>
           <JustChilingLandingImage className='w-10/12' />
-          <TinyStarsLandingImage className='w-96 mt-10' />
+          <TinyStarsLandingImage className='w-85 mt-10 mx-4' />
           <h2 className='text-center  text-4xl font-bold tracking-tight leading-13'>
             Ready to start your journey?
           </h2>
           <a
             href='#'
-            className='w-full md:w-72 flex justify-center items-center bg-discord-indigo hover:bg-discord-experiment500Hover hover:shadow-md  text-white py-4 px-6 mt-10 rounded-full text-lg'
+            className='w-85 md:w-72 flex justify-center items-center bg-discord-indigo hover:bg-discord-experiment500Hover hover:shadow-md  text-white py-4 px-6 mt-10 rounded-full text-lg'
           >
             <span className='inline-block mx-2'>
               <svg className='fill-current w-7 h-7 pt-1' viewBox='0 0 24 24'>
