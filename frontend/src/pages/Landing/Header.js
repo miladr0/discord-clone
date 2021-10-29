@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom'
 import LeftHeaderImage from '../../assets/left_bg_landing_header.svg'
 import RightHeaderImage from '../../assets/right_bg_landing_header.svg'
 import CenterHeaderImage from '../../assets/center_bg_landing_header.svg'
+import { GetMe } from '../../hooks/redux'
+import { LOGIN_PAGE, ME_PAGE } from '../../constants/history.constants'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const me = GetMe()
+
   const navClass = classNames(
-    'transition transform ease-linear rounded-tl-lg rounded-bl-lg z-30 duration-500 w-5/6 absolute bg-white top-0 right-0 h-screen flex flex-col justify-between',
+    'transition transform ease-linear rounded-tl-lg rounded-bl-lg z-30 duration-500 w-4/6 absolute bg-white top-0 right-0 h-screen flex flex-col justify-between',
     {
       block: open,
       hidden: !open,
@@ -18,7 +22,7 @@ export default function Header() {
   return (
     <div className='bg-discord-heroBackground'>
       {/* Header section */}
-      <header className='w-10/12 mx-auto flex items-center justify-between px-1 sm:px-5 py-4'>
+      <header className=' w-full sm:w-10/12 mx-auto flex items-center justify-between px-2 sm:px-5 py-4'>
         <button type='button' className='block text-white'>
           <svg
             className='fill-current w-14 h-8'
@@ -61,18 +65,32 @@ export default function Header() {
         </nav>
 
         <div className='flex flex-row justify-between'>
-          <Link
-            to='/login'
-            className='px-4 py-2 hover:shadow-lg hover:text-discord-indigo rounded-full bg-white text-black text-sm'
-            href='#'
-          >
-            Login
-          </Link>
+          {me ? (
+            <Link
+              to={ME_PAGE}
+              className='sm:px-4 px-2 sm:py-2 flex justify-center items-center duration-300 hover:shadow-lg hover:text-discord-indigo rounded-full bg-white text-black sm:text-sm text-xs'
+              href='#'
+            >
+              Open Discord
+            </Link>
+          ) : (
+            <Link
+              to={LOGIN_PAGE}
+              className='px-4 py-2 duration-300 hover:shadow-lg hover:text-discord-indigo rounded-full bg-white text-black text-sm'
+              href='#'
+            >
+              Login
+            </Link>
+          )}
+
           <span
             className='text-white sm:hidden ml-4'
             onClick={() => setOpen(true)}
           >
-            <svg className='fill-current w-10 h-10' viewBox='0 0 40 40'>
+            <svg
+              className='fill-current w-10 h-10 cursor-pointer'
+              viewBox='0 0 40 40'
+            >
               <path
                 fill='currentColor'
                 fillRule='evenodd'
@@ -100,7 +118,7 @@ export default function Header() {
             </g>
           </svg>
           <svg
-            className='h-6 w-6'
+            className='h-6 w-6 cursor-pointer'
             onClick={() => setOpen(false)}
             viewBox='0 0 12 12'
           >
@@ -115,22 +133,24 @@ export default function Header() {
         </div>
         <ul className='list-none text-discord-notQuiteDark text-sm text-left pl-2 flex-1 space-y-2 mt-4 pt-4 mx-4 border-t-2 border-discord-offWhite'>
           <li className='text-discord-textLink bg-discord-offWhite p-2 rounded-lg'>
-            <a href='#'></a>Home
+            <a className='text-discord-textLink' href='#'>
+              Home
+            </a>
           </li>
           <li className='p-2 rounded-lg'>
-            <a href='#'></a>Download
+            <a href='#'>Download</a>
           </li>
           <li className='p-2 rounded-lg'>
-            <a href='#'></a>Nitro
+            <a href='#'>Nitro</a>
           </li>
           <li className='p-2 rounded-lg'>
-            <a href='#'></a>Safety
+            <a href='#'>Safety</a>
           </li>
           <li className='p-2 rounded-lg'>
-            <a href='#'></a>Blog
+            <a href='#'>Blog</a>
           </li>
           <li className='p-2 rounded-lg'>
-            <a href='#'></a>Careers
+            <a href='#'>Careers</a>
           </li>
         </ul>
 
