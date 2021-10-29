@@ -408,6 +408,7 @@ module.exports = {
       ...theme('spacing'),
       ...negative(theme('spacing')),
       16: '4rem',
+      18: '4.5rem',
       20: '5rem',
       28: '7rem',
       96: '24rem',
