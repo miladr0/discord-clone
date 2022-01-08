@@ -31,7 +31,7 @@ app.use(compression());
 // enable cors
 app.use(
   cors({
-    origin: true,
+    origin: process.env.FRONTEND_URL,
     optionsSuccessStatus: 200,
     credentials: true,
   })
@@ -39,7 +39,7 @@ app.use(
 app.options(
   '*',
   cors({
-    origin: true,
+    origin: process.env.FRONTEND_URL,
     optionsSuccessStatus: 200,
     credentials: true,
   })
