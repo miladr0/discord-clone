@@ -15,6 +15,5 @@ module.exports = catchAsync(async (req, res) => {
     populate: 'senderId',
   };
   const messages = await messageService.queryMessages(filter, options, req.user);
-  console.log('message: ', messages);
   res.status(httpStatus.CREATED).send(messages);
 });

@@ -39,15 +39,25 @@ export default function PendingProfileModal({
   return (
     <Modal show={show} onClose={onClose} center big>
       <div className='flex flex-col lg:w-11/12 xl:w-8/12 md:w-10/12 sm:w-11/12 w-full bg-discord-bgBlackModal'>
-        <div className='w-full bg-discord-red h-20 relative rounded-t-lg'>
+        <div
+          className={`w-full bg-discord-${
+            isIncoming(user, pending)
+              ? pending?.from?.color
+              : pending?.to?.color
+          } h-20 relative rounded-t-lg`}
+        >
           <div className='flex items-center absolute bottom-0 left-0 -mb-16 ml-4'>
             <div className='flex flex-col'>
               <div className='relative flex justify-center'>
                 <a
                   href='#'
-                  className='relative flex items-center mx-auto w-20 h-20 bg-discord-red text-white rounded-full inline-block p-2 border-6 border-discord-900'
+                  className={`relative flex items-center mx-auto w-20 h-20 bg-discord-${
+                    isIncoming(user, pending)
+                      ? pending?.from?.color
+                      : pending?.to?.color
+                  } text-white rounded-full inline-block p-2 border-6 border-discord-900`}
                 >
-                  <DiscordIcon className='w-12 h-12 text-center mx-auto' />
+                  <DiscordIcon className={`w-12 h-12 text-center mx-auto`} />
                 </a>
                 <span className='bg-discord-green w-6 h-6 rounded-full absolute right-0 bottom-0 border-6 border-discord-900 mr-0 mb-2'></span>
               </div>

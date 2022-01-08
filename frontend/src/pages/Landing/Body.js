@@ -54,26 +54,27 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className='flex  justify-center items-center bg-discord-openGray px-4'>
-        <div className='flex flex-col justify-center items-center sm:my-18 my-14 p-4'>
-          <div className='flex flex-col justify-center items-center p-6'>
+      <div className='flex  justify-center items-center bg-discord-openGray px-4 py-1'>
+        <div className='flex flex-1 flex-col justify-center items-center sm:my-18 my-14 p-2 sm:p-4'>
+          <div className='flex flex-col justify-center items-center p-1 sm:p-6'>
             <h1 className='text-left md:text-5xl text-3xl leading-8 font-bold tracking-tight md:leading-13 md:mt-0 mt-6'>
               RELIABLE TECH FOR STAYING CLOSE
             </h1>
-            <p className='w-full md:w-9/12 px-4 mt-8 md:text-center text-left text-base text-discord-notQuiteDark '>
+            <p className='w-full md:w-9/12 px-2 sm:px-4 mt-8 md:text-center text-left text-base text-discord-notQuiteDark '>
               Low-latency voice and video feels like you’re in the same room.
               Wave hello over video, watch friends stream their games, or gather
               up and have a drawing session with screen share.
             </p>
           </div>
+
           <JustChilingLandingImage className='w-10/12' />
-          <TinyStarsLandingImage className='w-85 mt-10 mx-4' />
+          <TinyStarsLandingImage className='w-full sm:w-85 mt-10 mx-4' />
           <h2 className='text-center  text-4xl font-bold tracking-tight leading-13'>
             Ready to start your journey?
           </h2>
           <a
             href='#'
-            className='w-85 md:w-72 flex justify-center items-center bg-discord-indigo hover:bg-discord-experiment500Hover hover:shadow-md  text-white py-4 px-6 mt-10 rounded-full text-lg'
+            className='w-full sm:w-85 md:w-72 flex justify-center items-center bg-discord-indigo hover:bg-discord-experiment500Hover hover:shadow-md  text-white py-4 px-6 mt-10 rounded-full text-lg'
           >
             <span className='inline-block mx-2'>
               <svg className='fill-current w-7 h-7 pt-1' viewBox='0 0 24 24'>

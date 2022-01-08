@@ -8,6 +8,16 @@ const createMessage = {
   }),
 };
 
+const editMessage = {
+  body: Joi.object().keys({
+    message: Joi.string().required(),
+  }),
+  params: Joi.object().keys({
+    messageId: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   createMessage,
+  editMessage,
 };

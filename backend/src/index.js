@@ -5,12 +5,18 @@ const mongoose = require('mongoose');
 const app = require('./app');
 const config = require('./config/config');
 const socketIo = require('./socket/io');
+const { getConnection } = require('./lib/redisConnection');
 
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   console.log('Connected to MongoDB');
 
   server = http.createServer({}, app);
+
+  // init redis connection
+  getConnection();
+
+  // init socket
   socketIo.setup(server, cors);
 
   server.listen(config.port, () => {

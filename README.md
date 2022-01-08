@@ -1,7 +1,6 @@
-Discord clone using webpack5, React & Websockets
+Discord Clone using React, ReactQuery, Tailwindcss, Redux, Socket IO, NodeJS, Express, MongoDB and Redis.
 
-### WIP
-still in progress :)
+
 
 ![demo](https://i.imgur.com/2BJA0lK.png)
 
@@ -9,17 +8,8 @@ still in progress :)
 
 ### How To Run
 
-1- navigate to backend folder:
+<br/>
 
-```javascript
-yarn
-yarn start
-```
-now backend will be running on `http://localhost:4000`
+1- navigate to backend folder and follow [`README.md`](backend/README.md) instructions.
 
-2- navigate to frontend folder:
-
-```
-yarn
-yarn start
-```
+2- navigate to frontend folder and follow [`README.md`](frontend/README.md) instructions.

@@ -17,12 +17,14 @@ export default function Card({ user }) {
 
   return (
     <div className='w-full flex flex-col mx-4 mx-auto'>
-      <div className='w-full bg-discord-red h-20 relative rounded-t-lg'>
+      <div
+        className={`w-full bg-discord-${user?.color} h-20 relative rounded-t-lg`}
+      >
         <div className='flex items-center absolute bottom-0 left-0 -mb-16 ml-4'>
           <div className='relative flex justify-center'>
             <a
               href='#'
-              className='relative flex items-center mx-auto w-20 h-20 bg-discord-red text-white rounded-full inline-block p-2 border-6 border-discord-900'
+              className={`relative flex items-center mx-auto w-20 h-20 bg-discord-${user?.color} text-white rounded-full inline-block p-2 border-6 border-discord-900`}
             >
               <svg
                 className='w-12 h-12 text-center mx-auto'

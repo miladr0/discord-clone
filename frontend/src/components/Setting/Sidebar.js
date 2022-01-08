@@ -5,12 +5,15 @@ import { logout } from '../../api/auth'
 import { logoutSuccess } from '../../store/user'
 import { LOGIN_PAGE } from '../../constants/history.constants'
 import { useQueryClient } from 'react-query'
+import getSocket from '../../api/socket'
+import { ME_SOCKET } from '../../constants/socket.routes'
 
 export default function Sidebar() {
   const user = useSelector((state) => state.user)
   const history = useHistory()
   const dispatch = useDispatch()
   const cache = useQueryClient()
+  const socket = getSocket(user?.user?.tokens?.access?.token)
 
   const logoutHandler = async () => {
     if (user) {
@@ -19,6 +22,10 @@ export default function Sidebar() {
         cache.clear()
         dispatch(logoutSuccess())
         history.push(LOGIN_PAGE)
+
+        //disconnect socket after logout.
+        socket.emit(ME_SOCKET.LOGOUT, { userId: user?.user?.id })
+        socket.close()
       } catch (err) {
         console.log('err: ', err)
       }

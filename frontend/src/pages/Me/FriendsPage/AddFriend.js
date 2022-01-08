@@ -7,6 +7,9 @@ import { sendFriendRequest } from '../../../api/friend'
 import AlertModal from '../../../components/shared/Modal/AlertModal'
 import apiErrorHandler from '../../../utils/apiErrorHandler'
 import AddFriendIcon from '../../../assets/add_friend_icon.svg'
+import { GetMe } from '../../../hooks/redux'
+import getSocket from '../../../api/socket'
+import { ME_SOCKET } from '../../../constants/socket.routes'
 
 //
 function EmptyState() {
@@ -27,6 +30,8 @@ const FRIEND_DESCRIPTION = {
 }
 
 export default function Online() {
+  const me = GetMe()
+
   const cache = useQueryClient()
   const [input, setInput] = useState('')
   const [showAlert, setShowAlert] = useState(false)
@@ -35,6 +40,8 @@ export default function Online() {
     FRIEND_DESCRIPTION.DEFAULT
   )
   const [successInvite, setSuccessInvite] = useState(false)
+
+  const socket = getSocket(me?.tokens?.access?.token)
 
   function closeAlert() {
     setShowAlert(false)
@@ -65,12 +72,16 @@ export default function Online() {
     }
 
     try {
-      await sendFriendRequest({ username, shortId })
+      const result = await sendFriendRequest({ username, shortId })
       setInput('')
       setFriendDescription(FRIEND_DESCRIPTION.SUCCESS(input))
       setSuccessInvite(true)
 
       cache.invalidateQueries(OUT_GOING_REQUESTS_KEY)
+
+      socket.emit(ME_SOCKET.SEND_FRIEND_REQUEST, {
+        receiverId: result?.data?.to,
+      })
     } catch (e) {
       const result = apiErrorHandler(e)
       setAlertMessage(result)
@@ -94,7 +105,15 @@ export default function Online() {
         >
           {friendDescription}
         </p>
-        <div className='w-full mt-4 bg-discord-deprecatedTextInput border-1 border-discord-deprecatedTextInputBorder w-full rounded-lg'>
+        <div
+          className={classNames(
+            'w-full mt-4 bg-discord-deprecatedTextInput border-1 border-discord-deprecatedTextInputBorder w-full rounded-lg',
+            {
+              'border-discord-greenSuccess': successInvite,
+              'border-discord-deprecatedTextInputBorder': !successInvite,
+            }
+          )}
+        >
           <form className='flex justify-between'>
             <input
               value={input}
@@ -102,7 +121,9 @@ export default function Online() {
               type='text'
               placeholder='Enter a Username#0000'
               maxLength='37'
-              className=' w-full text-discord-100 p-3 bg-discord-deprecatedTextInput placeholder-discord-200 focus:outline-none leading-normal text-base'
+              className={classNames(
+                'w-full text-discord-100 p-3 bg-discord-deprecatedTextInput placeholder-discord-200 focus:outline-none leading-normal text-base'
+              )}
             />
             <button
               type='button'

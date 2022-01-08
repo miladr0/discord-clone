@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, useState } from 'react'
 import { useInfiniteQuery } from 'react-query'
 import EmptyChat from './EmptyChat'
 import Input from './Input'
@@ -8,7 +8,6 @@ import { ROOM_MESSAGES_KEY } from '../../constants/queryKeys'
 import ChatBeginner from './ChatBeginner'
 import { getTimeDifference, isNewDay } from '../../utils/dateUtils'
 import Divider from './Divider'
-
 import LoadingCircle from '../../assets/loading_circle_icon.svg'
 
 function checkSameTime(message1, message2) {
@@ -19,6 +18,7 @@ function checkSameTime(message1, message2) {
 
 export default function MessageContainer({ room, user }) {
   const observer = useRef()
+  const [currentMsgEditId, setCurrentMsgEditId] = useState(null)
 
   const {
     data,
@@ -60,14 +60,15 @@ export default function MessageContainer({ room, user }) {
 
   const messages = data ? data.pages.flatMap((page) => page?.results ?? []) : []
 
+  const setEditMessage = (msgId) => {
+    setCurrentMsgEditId(msgId)
+  }
+
   return (
     <div className='bg-discord-600 flex flex-1 flex-col'>
       <div className='overflow-y-auto h-full main--chat--scrollbar flex-1 flex flex-col-reverse'>
         {isLoading === false && messages.length ? (
           messages.map((message, index) => {
-            console.log('index: ', index)
-            console.log('message: ', message.message)
-
             if (messages.length === index + 1) {
               return (
                 <>
@@ -78,6 +79,8 @@ export default function MessageContainer({ room, user }) {
                         messages[Math.min(index + 1, messages.length - 1)]
                       )}
                       chat={message}
+                      currentMsgEditId={currentMsgEditId}
+                      setEditMessage={setEditMessage}
                     />
                   </div>
                   {isNewDay(
@@ -101,6 +104,8 @@ export default function MessageContainer({ room, user }) {
                     messages[index - 1 < 0 ? 0 : index - 1]
                   )}
                   chat={message}
+                  currentMsgEditId={currentMsgEditId}
+                  setEditMessage={setEditMessage}
                 />
                 {isNewDay(
                   message.createdAt,

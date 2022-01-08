@@ -10,9 +10,7 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<User>}
  */
 const getOrCreateRoom = async (user, body) => {
-  console.log('user: ', user);
   const { id } = body;
-  console.log('id: ', id);
 
   const friendShip = await FriendRequest.findOne({
     $or: [
@@ -21,7 +19,7 @@ const getOrCreateRoom = async (user, body) => {
     ],
     status: FRIEND_STATUS.FRIEND,
   });
-  console.log('friendShip: ', friendShip);
+
   if (!friendShip) {
     throw new ApiError(httpStatus.NOT_FOUND, `you and your friend do not have friendship!`);
   }
@@ -31,18 +29,22 @@ const getOrCreateRoom = async (user, body) => {
   }
 
   const alreadyRoom = await Room.findOne({
-    $or: [{ sender: user._id }, { receiver: user._id }],
+    $or: [
+      {
+        $and: [{ sender: user._id }, { receiver: id }],
+      },
+      {
+        $and: [{ sender: id }, { receiver: user._id }],
+      },
+    ],
   });
-  console.log('alreadyRoom: ', alreadyRoom);
 
   if (alreadyRoom) {
     if (alreadyRoom.sender.toString() === user._id.toString()) {
       alreadyRoom.roomDeletedBySender = false;
-      console.log('roomDeletedBySender: ');
       alreadyRoom.save();
     } else {
       alreadyRoom.roomDeletedByReceiver = false;
-      console.log('roomDeletedByReceiver: ');
       alreadyRoom.save();
     }
 
@@ -62,11 +64,11 @@ const getOrCreateRoom = async (user, body) => {
 const getOpenRooms = async (user) => {
   const rooms = await Room.find({
     $or: [
-      ({ sender: user._id, roomDeletedBySender: false },
+      { sender: user._id, roomDeletedBySender: false },
       {
         receiver: user._id,
         roomDeletedByReceiver: false,
-      }),
+      },
     ],
   })
     .populate({ path: 'sender' })
@@ -83,7 +85,6 @@ const getOpenRooms = async (user) => {
  */
 const closeRoom = async (user, roomId) => {
   const room = await Room.findById(roomId);
-  console.log('room: ', user._id.toString() === room.sender.toString());
 
   if (!room) {
     throw new ApiError(httpStatus.NOT_FOUND, `room not existed!`);

@@ -15,3 +15,11 @@ export function chatDividerFormat(date) {
 export function isNewDay(date1, date2) {
   return !moment(date1).isSame(moment(date2), 'day')
 }
+
+export function chatMainTime(date) {
+  return moment(date).format('MM/DD/YYYY')
+}
+
+export function isSameTime(date1, date2) {
+  return moment(date1).isSame(moment(date2))
+}

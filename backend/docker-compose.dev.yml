@@ -1,0 +1,31 @@
+version: '3'
+services:
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: redis_chat
+    volumes:
+      - ./redisdata:/bitnami/redis/data
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - chat
+
+  mongodb:
+    hostname: mongo_chat
+    container_name: mongo_chat
+    image: mongo
+    volumes:
+      - ./mongodata:/data/db
+    ports:
+      - '127.0.0.1:27017:27017'
+    networks:
+      - chat
+
+networks:
+  chat:
+    driver: bridge
+
+volumes:
+  mongodata:

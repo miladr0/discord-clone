@@ -18,7 +18,7 @@ export function friendObject(user, request) {
   return request.to
 }
 
-export default function PendingItem({ user, friend, toggleModal }) {
+export default function PendingItem({ user, friend }) {
   const [isLoading, setIsLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
@@ -34,14 +34,15 @@ export default function PendingItem({ user, friend, toggleModal }) {
   async function openDM(e) {
     e.stopPropagation()
     setIsLoading(true)
-
     try {
       const { data } = await getOrCreateRoom(friendObject(user, friend).id)
+
       if (data) {
         cache.invalidateQueries(OPEN_ROOMS)
         history.push(DM_URL(data.id))
+      } else {
+        setIsLoading(false)
       }
-      setIsLoading(false)
     } catch (err) {
       const result = apiErrorHandler(err)
       setAlertMessage(result)
@@ -58,7 +59,13 @@ export default function PendingItem({ user, friend, toggleModal }) {
       <div className='flex justify-between items-center'>
         <div className='flex'>
           <div className='relative flex items-center justify-center'>
-            <div className='flex justify-center items-center w-8 h-8 bg-discord-red text-white hover:text-discord-100 rounded-full'>
+            <div
+              className={`flex justify-center items-center w-8 h-8 bg-discord-${
+                isIncoming(user, friend)
+                  ? friend?.from?.color
+                  : friend?.to?.color
+              } text-white hover:text-discord-100 rounded-full`}
+            >
               <DiscordIcon className='w-5 h-5' />
             </div>
             <span className='bg-discord-green w-3 h-3 rounded-full absolute right-0 bottom-0 -mr-1 mb-1'></span>

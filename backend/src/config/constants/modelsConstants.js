@@ -3,3 +3,5 @@ exports.FRIEND_STATUS = {
   BLOCKED: 'BLOCKED',
   FRIEND: 'FRIEND',
 };
+
+exports.COLORS = ['red', 'green', 'yellow', 'heroBackground', 'sideBarChannels']

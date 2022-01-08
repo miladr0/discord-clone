@@ -13,6 +13,9 @@ import {
   cancelPendingRequestApi,
   acceptPendingRequestApi,
 } from '../../../../api/friend'
+import { GetMe } from '../../../../hooks/redux'
+import getSocket from '../../../../api/socket'
+import { ME_SOCKET } from '../../../../constants/socket.routes'
 
 const PENDING_WAY = {
   INCOMING: 'Incoming Friend Request',
@@ -26,8 +29,12 @@ function pendingStatus(user, request) {
 }
 
 export default function PendingItem({ user, pending, toggleModal }) {
+  const me = GetMe()
+
   const cache = useQueryClient()
   const [isLoading, setIsLoading] = React.useState(false)
+
+  const socket = getSocket(me?.tokens?.access?.token)
 
   async function cancelPending(e) {
     e.stopPropagation()
@@ -52,9 +59,13 @@ export default function PendingItem({ user, pending, toggleModal }) {
     setIsLoading(true)
 
     try {
-      await acceptPendingRequestApi(pending.id)
+      const result = await acceptPendingRequestApi(pending.id)
       cache.invalidateQueries(PENDING_REQUESTS_KEY)
       cache.invalidateQueries(ALL_FRIENDS_KEY)
+
+      socket.emit(ME_SOCKET.SEND_ACCEPT_FRIEND_REQUEST, {
+        receiverId: result?.data?.from,
+      })
 
       setIsLoading(false)
     } catch (err) {
@@ -72,7 +83,13 @@ export default function PendingItem({ user, pending, toggleModal }) {
       <div className='flex justify-between items-center'>
         <div className='flex'>
           <div className='relative flex items-center justify-center'>
-            <div className='flex justify-center items-center w-8 h-8 bg-discord-red text-white hover:text-discord-100 rounded-full'>
+            <div
+              className={`flex justify-center items-center w-8 h-8 bg-discord-${
+                isIncoming(user, pending)
+                  ? pending?.from?.color
+                  : pending?.to?.color
+              } text-white hover:text-discord-100 rounded-full`}
+            >
               <DiscordIcon className='w-5 h-5' />
             </div>
             <span className='bg-discord-green w-3 h-3 rounded-full absolute right-0 bottom-0 -mr-1 mb-1'></span>

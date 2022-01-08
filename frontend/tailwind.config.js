@@ -14,6 +14,8 @@ module.exports = {
           mainTextHover: '#dcddde',
           mainText: '#b9bbbe',
           red: '#f04747',
+          red2: '#ed4245',
+          red2Hover: '#c03537',
           indigo: '#5865f2',
           green: '#43b581',
           topIcons: '#b9bbbe',
@@ -38,6 +40,12 @@ module.exports = {
           transparentBlack2: '#0000001a',
           transparentBlack3: '#04040512',
           openGray: '#f6f6f6',
+          floating: '#18191c',
+          greenSuccess: '#4fdc7c',
+          bgBlackModal: '#36393f',
+          grayDeep: '#4f545c',
+          deepGrayHover: '#5d6269',
+          redNotif: 'rgb(237, 66, 69)',
           100: '#dcddde',
           200: '#72767c',
           500: '#b9bbbe',
@@ -366,7 +374,11 @@ module.exports = {
     inset: {
       0: '0',
       5: '1.25rem',
+      7: '1.75rem',
+      '-4': '-0.95rem',
       '-3': '-0.75rem',
+      '-2': '-0.50rem',
+      '-1': '-0.25rem',
       '-48': '-12rem',
       auto: 'auto',
     },
@@ -736,6 +748,7 @@ module.exports = {
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       bounce: 'bounce 1s infinite',
+      modalIn: 'modalIn 300ms cubic-bezier(0,0,0,1)',
     },
     keyframes: {
       spin: {
@@ -755,6 +768,18 @@ module.exports = {
         '50%': {
           transform: 'none',
           animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
+        },
+      },
+      modalIn: {
+        from: {
+          '-webkit-transform': 'scale(1.2)',
+          transform: 'scale(1.2)',
+          opacity: 0,
+        },
+        to: {
+          '-webkit-transform': 'scale(1)',
+          transform: 'scale(1)',
+          opacity: 1,
         },
       },
     },

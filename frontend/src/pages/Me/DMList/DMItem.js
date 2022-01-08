@@ -3,7 +3,7 @@ import { useQueryClient } from 'react-query'
 import { useHistory, Link } from 'react-router-dom'
 import classNames from 'classnames'
 
-import { PENDING_REQUESTS_KEY, OPEN_ROOMS } from '../../../constants/queryKeys'
+import { OPEN_ROOMS } from '../../../constants/queryKeys'
 import { DM_URL, ME_PAGE } from '../../../constants/history.constants'
 import { getOrCreateRoom, closeDMApi } from '../../../api/room'
 import apiErrorHandler from '../../../utils/apiErrorHandler'
@@ -80,7 +80,11 @@ export default function DMItem({ user, room, match }) {
       <Link to={DM_URL(room?.id)} className='flex justify-between items-center'>
         <div className='flex'>
           <div className='relative flex items-center justify-center'>
-            <div className='flex justify-center items-center w-8 h-8 bg-discord-red text-white hover:text-discord-100 rounded-full'>
+            <div
+              className={`flex justify-center items-center w-8 h-8 bg-discord-${
+                friendObject(user, room).color
+              } text-white hover:text-discord-100 rounded-full`}
+            >
               <DiscordIcon className='w-5 h-5' />
             </div>
             <span className='bg-discord-green w-3 h-3 rounded-full absolute right-0 bottom-0 -mr-1 mb-1'></span>

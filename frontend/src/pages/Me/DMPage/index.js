@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom'
 import MessageContainer from '../../../components/chat/MessageContainer'
 import OnlineUsers from '../../../components/OnlineUsers'
 import { GetOpenRooms } from '../../../hooks/reactQuery'
+import useMessageSocket from '../../../api/socket/useMessageSocket'
+import { ROOM_MESSAGES_KEY } from '../../../constants/queryKeys'
 
 export default function Index() {
   const { isLoading, data: rooms } = GetOpenRooms()
@@ -16,7 +18,8 @@ export default function Index() {
   if (dmId && rooms?.length) {
     room = rooms.find((r) => r.id === dmId)
   }
-  console.log('room: ', room)
+
+  useMessageSocket(room?.id, ROOM_MESSAGES_KEY(room?.id))
 
   return (
     <div className='flex flex-1 flex-col min-h-screen h-screen'>

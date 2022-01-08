@@ -9,7 +9,7 @@ import { ME_PAGE } from '../../constants/history.constants'
 import apiErrorHandler from '../../utils/apiErrorHandler'
 import { loginSuccess } from '../../store/user'
 
-import loginBg from '../../assets/login_bg.png'
+import LoginBg from '../../assets/login_bg.svg'
 
 export default function Index() {
   const history = useHistory()
@@ -30,10 +30,7 @@ export default function Index() {
 
   return (
     <div className='flex flex-col   relative bg-discord-semi600 h-screen w-full'>
-      <img
-        src={loginBg}
-        className='z-0 hidden object-cover object-center sm:block absolute top-0 bottom-0 w-full h-screen'
-      />
+      <LoginBg className='z-0 hidden object-cover object-center sm:block absolute top-0 bottom-0 w-full h-screen' />
 
       <Link
         to='/'
@@ -70,8 +67,8 @@ export default function Index() {
                 <TextField
                   fieldClass='mb-4 mt-4'
                   labelClass='block text-discord-sideBarChannels font-semibold text-xs mb-2'
-                  inputClass='focus:outline-none border-discord-900
-                   focus:ring-2 focus:ring-blue-400 bg-discord-800 text-white
+                  inputClass='focus:outline-none border-discord-transparentBlack1 border-1
+                   focus:ring-2 focus:ring-blue-400 bg-discord-transparentBlack2 text-white
                     w-full rounded py-1 px-2'
                   label='EMAIL'
                   name='email'
@@ -81,8 +78,8 @@ export default function Index() {
                 <TextField
                   fieldClass='mb-4 mt-4'
                   labelClass='block text-discord-sideBarChannels font-semibold text-xs mb-2'
-                  inputClass='focus:outline-none border-discord-900
-                   focus:ring-2 focus:ring-blue-400 bg-discord-800 text-white
+                  inputClass='focus:outline-none border-discord-transparentBlack1 border-1
+                   focus:ring-2 focus:ring-blue-400 bg-discord-transparentBlack2 text-white
                     w-full rounded py-1 px-2'
                   label='USERNAME'
                   name='username'
@@ -92,8 +89,8 @@ export default function Index() {
                 <TextField
                   fieldClass='mb-4 mt-4'
                   labelClass='block text-discord-sideBarChannels font-semibold text-xs mb-2'
-                  inputClass='focus:outline-none border-discord-900
-                   focus:ring-2 focus:ring-blue-400 bg-discord-800 text-white
+                  inputClass='focus:outline-none border-discord-transparentBlack1 border-1
+                   focus:ring-2 focus:ring-blue-400 bg-discord-transparentBlack2 text-white
                     w-full rounded py-1 px-2'
                   label='PASSWORD'
                   name='password'

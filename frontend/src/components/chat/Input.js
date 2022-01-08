@@ -6,6 +6,7 @@ import getSocket from '../../api/socket'
 import { sendMessage } from '../../api/messages'
 import { GetMe } from '../../hooks/redux'
 import { ROOM_MESSAGES_KEY } from '../../constants/queryKeys'
+import { ROOM_SOCKET } from '../../constants/socket.routes'
 
 export default function Input({ user, room }) {
   const me = GetMe()
@@ -16,12 +17,10 @@ export default function Input({ user, room }) {
   const inputRef = useRef(null)
   const cache = useQueryClient()
 
-  // connect to socket on component mount
+  // connect to socket on component mount.
   useEffect(() => {
     const newSocket = getSocket(me?.tokens?.access?.token)
     setSocket(newSocket)
-
-    return () => newSocket.close()
   }, [setSocket, me?.tokens?.access?.token])
 
   let userName
@@ -51,18 +50,37 @@ export default function Input({ user, room }) {
       setSubmitting(true)
       setTyping(false)
 
-      socket.emit('sendMessage', { text })
-
       const data = new FormData()
       data.append('roomId', room.id)
       data.append('text', text.trim())
 
       try {
-        await sendMessage(data)
+        const result = await sendMessage(data)
+        socket.emit(ROOM_SOCKET.ROOM_SEND_MESSAGE, {
+          msg: result?.data,
+          receiverId: friendObject(
+            user,
+            room,
+            'sender.id',
+            'sender',
+            'receiver'
+          ).id,
+        })
+
         setText('')
         setSubmitting(false)
         inputRef?.current?.focus()
-        cache.invalidateQueries(ROOM_MESSAGES_KEY(room?.id))
+
+        // populate actual sender object
+        result.data.senderId = me?.user
+
+        cache.setQueryData(ROOM_MESSAGES_KEY(room.id), (d) => {
+          if (d?.pages[0]?.results[0]?.id !== result?.data?.id) {
+            d?.pages[0]?.results.unshift(result?.data)
+          }
+
+          return d
+        })
       } catch (e) {
         console.log('e: ', e)
         setText('')

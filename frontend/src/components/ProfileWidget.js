@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Modal from './shared/Modal'
 import Setting from './Setting'
+import { GetMe } from '../hooks/redux/index'
 
 export default function ProfileWidget({ user }) {
   const [showSetting, setShowSetting] = useState(false)
+  const me = GetMe()
 
   function toggleSettingModal() {
     setShowSetting(!showSetting)
@@ -14,7 +16,7 @@ export default function ProfileWidget({ user }) {
         <div className='relative flex justify-center'>
           <a
             href='#'
-            className='relative flex items-center mx-auto w-10 h-10 bg-discord-red text-white hover:text-discord-100 rounded-full inline-block'
+            className={`relative flex items-center mx-auto w-10 h-10 bg-discord-${me?.user?.color} text-white hover:text-discord-100 rounded-full inline-block`}
           >
             <svg
               className='w-6 h-6 text-center mx-auto'

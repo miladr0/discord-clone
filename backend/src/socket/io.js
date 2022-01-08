@@ -1,4 +1,6 @@
 const socketIo = require('socket.io');
+const { createAdapter } = require('@socket.io/redis-adapter');
+const { getSubConnection, getConnection } = require('../lib/redisConnection');
 const passport = require('passport');
 const { jwtStrategy } = require('../config/passport');
 const routes = require('./socket.routes');
@@ -17,14 +19,20 @@ const wrapMiddlewareForSocketIo = (middleware) => (socket, next) => middleware(s
 
 let io;
 
-const getSocketIo = () => {
+const getSocketIo = async () => {
   if (!io) {
     throw new Error('socket not available');
   }
 
   return io;
 };
-const setup = (server) => {
+
+const setup = async (server) => {
+  // const subClient = await getSubConnection()
+  // const pubClient = await getConnection()
+
+  // const socketIo = new Server();
+  // socketIo.adapter(createAdapter(pubClient, subClient));
   io = socketIo(server, {
     cors: {
       origin: '*',
@@ -35,10 +43,8 @@ const setup = (server) => {
     .use(wrapMiddlewareForSocketIo(passport.session()))
     .use(wrapMiddlewareForSocketIo(passport.authenticate(['jwt'])))
     .on('connection', (socket) => {
-      console.log(`socket io connection is ready`);
-
       // init routes
-      routes.map((route) => socket.on(route.name, route.controller));
+      routes.map((route) => socket.on(route.name, (data) => route.controller(socket, data)));
     });
 
   return io;

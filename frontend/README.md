@@ -1,9 +1,18 @@
-# react-webpack-5-tailwind-2
+# Discord frontend
+Discord Clone using React, ReactQuery, Tailwindcss, Redux, Socket IO, NodeJS, Express, MongoDB and Redis.
 
-## Usage
+<br/>
+<br/>
 
-### Development server
+## Setup Frontend
+
+Install the dependencies:
 
 ```bash
-yarn start / npm start
+yarn install
+```
+
+then blow command:
+```bash
+yarn start
 ```

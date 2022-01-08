@@ -4,12 +4,14 @@ import InnerProfile from './InnerProfile'
 import Friends from './FriendsPage'
 import DMPage from './DMPage'
 import { ME_PAGE } from '../../constants/history.constants'
+import useMeSocket from '../../api/socket/useMeSocket'
 
 export default function Index({
   ProfileWidgetComponent,
   LogoChannelsComponent,
 }) {
-  ////
+  useMeSocket()
+
   const match = useRouteMatch()
   const location = useLocation()
   return (

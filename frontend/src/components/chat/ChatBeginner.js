@@ -13,7 +13,11 @@ export default function EmptyChat({ room, user }) {
   return (
     <div className='flex flex-col justify-end p-4'>
       <div className='relative flex items-center justify-start'>
-        <div className='flex justify-center items-center w-20 h-20 bg-discord-red text-white rounded-full'>
+        <div
+          className={`flex justify-center items-center w-20 h-20 bg-discord-${
+            friendObject(user, room, 'sender.id', 'sender', 'receiver').color
+          } text-white rounded-full`}
+        >
           <DiscordIcon className='w-12 h-12' />
         </div>
       </div>
