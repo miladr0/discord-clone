@@ -71,3 +71,5 @@ JWT_REFRESH_EXPIRATION_DAYS=30
 REDIS_PORT=6379
 REDIS_HOST=localhost
 ```
+
+## production deploy
