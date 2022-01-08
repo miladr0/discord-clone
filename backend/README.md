@@ -41,8 +41,9 @@ cp .env.example .env
 Running locally:
 
 ```bash
-yarn start
+yarn dev
 ```
+
 now backend will be running on `http://localhost:4000`
 <br/>
 <br/>
