@@ -15,6 +15,23 @@ const app = express();
 // set security HTTP headers
 app.use(helmet());
 
+// enable cors
+app.use(
+  cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
+app.options(
+  '*',
+  cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
+
 // parse json request body
 app.use(express.json());
 
@@ -27,21 +44,6 @@ app.use(mongoSanitize());
 
 // gzip compression
 app.use(compression());
-
-// enable cors
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
-app.options(
-  '*',
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
 
 // jwt authentication
 app.use(passport.initialize());

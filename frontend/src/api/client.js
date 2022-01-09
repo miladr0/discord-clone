@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { LOGIN_PAGE } from '../constants/history.constants'
 
+axios.defaults.withCredentials = true
+
 const client = axios.create({
   baseURL: process.env.API_URL,
   withCredentials: true,

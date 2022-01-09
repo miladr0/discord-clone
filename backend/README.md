@@ -67,9 +67,8 @@ JWT_ACCESS_EXPIRATION_MINUTES=30
 # Number of days after which a refresh token expires
 JWT_REFRESH_EXPIRATION_DAYS=30
 
-# redis url and port
-REDIS_PORT=6379
-REDIS_HOST=localhost
+# redis
+REDIS_HOST=redis://localhost:6379
 ```
 
 ## production deploy

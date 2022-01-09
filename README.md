@@ -2,7 +2,7 @@ Discord Clone using React, ReactQuery, Tailwindcss, Redux, Socket IO, NodeJS, Ex
 
 
 
-![demo](https://i.imgur.com/2BJA0lK.png)
+![demo](https://i.imgur.com/JmVX2CZ.png)
 
 
 
