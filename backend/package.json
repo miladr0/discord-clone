@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
-    "start": "pm2 start ecosystem.config.json --no-daemon",
+    "start": "pm2 start ecosystem.config.json --no-daemon --exp-backoff-restart-delay=50",
     "test": "jest -i --colors --verbose --detectOpenHandles",
     "test:watch": "jest -i --watchAll",
     "coverage": "jest -i --coverage",

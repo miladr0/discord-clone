@@ -37,7 +37,7 @@ const exitHandler = () => {
 
 const unexpectedErrorHandler = (error) => {
   console.log(error);
-  exitHandler();
+  // exitHandler();
 };
 
 process.on('uncaughtException', unexpectedErrorHandler);
@@ -45,7 +45,7 @@ process.on('unhandledRejection', unexpectedErrorHandler);
 
 process.on('SIGTERM', () => {
   console.log('SIGTERM received');
-  if (server) {
-    server.close();
-  }
+  // if (server) {
+  //   server.close();
+  // }
 });
