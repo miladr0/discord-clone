@@ -8,6 +8,7 @@ services:
     ports:
       - 6379:6379
     environment:
+      - REDIS_AOF_ENABLED=no
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - chat
