@@ -45,8 +45,12 @@ const refreshAuth = async (refreshToken) => {
       throw new Error();
     }
     await refreshTokenDoc.remove();
-    return tokenService.generateAuthTokens(user);
+    const tokens = await tokenService.generateAuthTokens(user);
+    return { user, tokens };
   } catch (error) {
+    if (error.message === 'Token not found' || error.message === 'jwt expired') {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'Token not found');
+    }
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
   }
 };
